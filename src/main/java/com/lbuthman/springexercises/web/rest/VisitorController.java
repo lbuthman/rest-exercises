@@ -11,15 +11,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/visitors")
-public class VisitorResource {
+public class VisitorController {
 
-    private final Logger log = LoggerFactory.getLogger(VisitorResource.class);
+    private final Logger log = LoggerFactory.getLogger(VisitorController.class);
 
     private static final String ENTITY_NAME = "visitor";
 
     private final VisitorService service;
 
-    public VisitorResource(VisitorService service) {
+    public VisitorController(VisitorService service) {
         this.service = service;
     }
 
