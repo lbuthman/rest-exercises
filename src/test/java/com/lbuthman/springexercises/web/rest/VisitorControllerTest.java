@@ -59,6 +59,7 @@ public class VisitorControllerTest {
      */
     @Before
     public void initTest() {
+        repository.deleteAll();
         visitor = createVisitor();
     }
 
