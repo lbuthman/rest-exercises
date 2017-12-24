@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
 
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
@@ -63,7 +62,6 @@ public class VisitorControllerTest {
         visitor = createVisitor();
     }
 
-    @Transactional
     @Test
     public void getAllVisitors() throws Exception {
         //initialize repository
@@ -71,7 +69,6 @@ public class VisitorControllerTest {
 
         when(service.getAllVisitors()).thenReturn(repository.findAll());
 
-        //when
         mockMvc.perform(get("/api/v1/visitors"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
@@ -79,7 +76,21 @@ public class VisitorControllerTest {
                 .andExpect(jsonPath("$.[*].name").value(hasItems(DEFAULT_NAME)));
     }
 
-//    @Test
+    @Test
+    public void getVisitor() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(visitor);
+
+        when(service.getVisitorByName(DEFAULT_NAME)).thenReturn(repository.findByName(DEFAULT_NAME));
+
+        mockMvc.perform(get("/api/v1/visitors/" + visitor.getName()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id").value(visitor.getId().intValue()))
+                .andExpect(jsonPath("$.name").value(visitor.getName()));
+    }
+
+    //    @Test
 //    public void createVisitor() {
 //    }
 //
