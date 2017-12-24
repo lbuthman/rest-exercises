@@ -29,6 +29,13 @@ public class VisitorController {
         return service.getAllVisitors();
     }
 
+    @GetMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
+    public Visitor getVisitor(@PathVariable String name) {
+        log.debug("REST request user with provided name : {}", name);
+        return service.getVisitorByName(name);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Visitor createVisitor(@RequestBody Visitor visitor) {
