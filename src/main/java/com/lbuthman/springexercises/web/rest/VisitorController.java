@@ -2,6 +2,7 @@ package com.lbuthman.springexercises.web.rest;
 
 import com.lbuthman.springexercises.domain.Visitor;
 import com.lbuthman.springexercises.services.VisitorService;
+import com.lbuthman.springexercises.web.rest.errors.BadRequestException;
 import com.lbuthman.springexercises.web.rest.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,10 @@ public class VisitorController {
     @ResponseStatus(HttpStatus.CREATED)
     public Visitor createVisitor(@RequestBody Visitor visitor) {
         log.debug("REST request to save Visitor : {}", visitor);
+        if (visitor.getId() != null) {
+            throw new BadRequestException("A new visitor cannot already have an id",
+                    ENTITY_NAME);
+        }
         return service.createVisitor(visitor);
     }
 
