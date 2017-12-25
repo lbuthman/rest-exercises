@@ -16,14 +16,18 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringExercisesApplication.class)
-public class VisitorControllerTest {
+public class VisitorControllerTest extends AbstractRestControllerTest {
 
     private final static String DEFAULT_NAME = "Luke";
     private final static String UPDATED_NAME = "Calvin";
@@ -84,16 +88,34 @@ public class VisitorControllerTest {
 
         when(service.getVisitorByName(DEFAULT_NAME)).thenReturn(repository.findByName(DEFAULT_NAME));
 
-        mockMvc.perform(get("/api/v1/visitors/" + visitor.getName()))
+        mockMvc.perform(get("/api/v1/visitors/{name}", visitor.getName()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id").value(visitor.getId().intValue()))
                 .andExpect(jsonPath("$.name").value(visitor.getName()));
     }
 
-    //    @Test
-//    public void createVisitor() {
+//    @Test
+//    public void getNonExistentVisitor() throws Exception {
+//        mockMvc.perform(get("/api/v1/visitors/bad"))
+//                .andExpect(status().isNotFound());
 //    }
+
+    @Test
+    public void createNewVisitor() throws Exception {
+        int repoCurrentSize = repository.findAll().size();
+
+//        when(service.createVisitor(visitor)).thenReturn(visitor);
+        mockMvc.perform(post("/api/v1/visitors")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(visitor)))
+                .andExpect(status().isCreated());
+
+        List<Visitor> visitors = repository.findAll();
+        assertThat(visitors.size() == repoCurrentSize + 1);
+        assertThat(visitors.contains(DEFAULT_NAME));
+
+    }
 //
 //    @Test
 //    public void updateVisitor() {
