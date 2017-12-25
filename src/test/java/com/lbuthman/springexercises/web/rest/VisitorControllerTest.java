@@ -116,7 +116,19 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
         assertThat(visitors.contains(DEFAULT_NAME));
 
     }
-//
+
+    @Test
+    public void createVisitorWithExistingId() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(visitor);
+
+        mockMvc.perform(post("/api/v1/visitors")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(visitor)))
+                .andExpect(status().isBadRequest());
+    }
+
+    //
 //    @Test
 //    public void updateVisitor() {
 //    }
