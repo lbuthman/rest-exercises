@@ -2,6 +2,7 @@ package com.lbuthman.springexercises.web.rest;
 
 import com.lbuthman.springexercises.domain.Visitor;
 import com.lbuthman.springexercises.services.VisitorService;
+import com.lbuthman.springexercises.web.rest.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -33,7 +34,12 @@ public class VisitorController {
     @ResponseStatus(HttpStatus.OK)
     public Visitor getVisitor(@PathVariable String name) {
         log.debug("REST request user with provided name : {}", name);
-        return service.getVisitorByName(name);
+        Visitor visitor = service.getVisitorByName(name);
+        if (visitor == null) {
+            throw new ResourceNotFoundException("Visitor with the name " +
+                    name + " was not found.", ENTITY_NAME);
+        }
+        return visitor;
     }
 
     @PostMapping
