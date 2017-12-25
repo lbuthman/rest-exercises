@@ -95,11 +95,11 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.name").value(visitor.getName()));
     }
 
-//    @Test
-//    public void getNonExistentVisitor() throws Exception {
-//        mockMvc.perform(get("/api/v1/visitors/bad"))
-//                .andExpect(status().isNotFound());
-//    }
+    @Test
+    public void getNonExistentVisitor() throws Exception {
+        mockMvc.perform(get("/api/v1/visitors/bad"))
+                .andExpect(status().isNotFound());
+    }
 
     @Test
     public void createNewVisitor() throws Exception {
