@@ -41,7 +41,7 @@ public class VisitorController {
      *
      * @param name the name of the visitor to retrieve
      * @return a status of 200 (OK) and the found visitor
-     * or a status of 404 if visitor entity is not found
+     * or a status of 404 (NOT FOUND) if visitor entity is not found
      */
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
@@ -55,6 +55,13 @@ public class VisitorController {
         return visitor;
     }
 
+    /**
+     * POST / : post a new visitor entity
+     *
+     * @param visitor the visitor entity to create
+     * @return a status of 201 (CREATED) and new visitor
+     * or a status of 400 (BAD REQUEST) if id already exists
+     */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Visitor createVisitor(@RequestBody Visitor visitor) {
