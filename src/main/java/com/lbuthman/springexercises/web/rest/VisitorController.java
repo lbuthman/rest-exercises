@@ -24,12 +24,24 @@ public class VisitorController {
         this.service = service;
     }
 
+    /**
+     * GET / : get all the visitors
+     *
+     * @return a status of 200 (OK) and a List of visitors
+     */
     @GetMapping
     public List<Visitor> getAllVisitors() {
         log.debug("REST request to get all visitors");
         return service.getAllVisitors();
     }
 
+    /**
+     * GET /:name : get the visitor by name
+     *
+     * @param name the name of the visitor to retrieve
+     * @return a status of 200 (OK) and the found visitor
+     * or a status of 404 if visitor entity is not found
+     */
     @GetMapping("/{name}")
     @ResponseStatus(HttpStatus.OK)
     public Visitor getVisitor(@PathVariable String name) {
