@@ -12,7 +12,7 @@ public interface VisitorService {
 
     Visitor createVisitor(Visitor visitor);
 
-    Visitor updateVisitor(Long id, Visitor visitor);
+    Visitor updateVisitor(Visitor visitor);
 
     void deleteVisitor(Long id);
 }

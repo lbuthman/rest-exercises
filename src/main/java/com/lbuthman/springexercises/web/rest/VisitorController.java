@@ -73,11 +73,11 @@ public class VisitorController {
         return service.createVisitor(visitor);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     @ResponseStatus(HttpStatus.OK)
-    public Visitor updateVisitor(@PathVariable Long id, @RequestBody Visitor visitor) {
+    public Visitor updateVisitor(@RequestBody Visitor visitor) {
         log.debug("REST request to update Visitor : {}", visitor);
-        return  service.updateVisitor(id, visitor);
+        return  service.updateVisitor(visitor);
     }
 
     @DeleteMapping("/{id}")

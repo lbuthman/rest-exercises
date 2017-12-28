@@ -140,7 +140,7 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
         Visitor updatedVisitor = repository.findOne(visitor.getId());
         updatedVisitor.setName(UPDATED_NAME);
 
-        mockMvc.perform(put("/api/v1/visitors/{id}", updatedVisitor.getId())
+        mockMvc.perform(put("/api/v1/visitors")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .content(asJsonString(updatedVisitor)))
                 .andExpect(status().isOk());
