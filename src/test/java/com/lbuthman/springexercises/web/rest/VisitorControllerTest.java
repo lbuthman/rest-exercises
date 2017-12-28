@@ -21,9 +21,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -168,8 +166,17 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
         assertThat(allVisitors).hasSize(sizeBeforeUpdate);
     }
 
-//
-//    @Test
-//    public void deleteVisitor() {
-//    }
+
+    @Test
+    public void deleteVisitor() throws  Exception {
+        //initialize repository
+        repository.saveAndFlush(visitor);
+
+        int sizeBeforeDelete = repository.findAll().size();
+
+        mockMvc.perform(delete("/api/v1/visitors/{id}", visitor.getId()))
+                .andExpect(status().isOk());
+
+        assertThat(repository.findAll().size() < sizeBeforeDelete);
+    }
 }
