@@ -149,6 +149,25 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
         assertThat(allVisitors).hasSize(sizeBeforeUpdate);
         assertThat(allVisitors.contains(UPDATED_NAME));
     }
+
+    @Test
+    public void updateNonExistentVisitor() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(visitor);
+
+        int sizeBeforeUpdate = repository.findAll().size();
+
+        Visitor newVisitor = new Visitor();
+
+        mockMvc.perform(put("/api/v1/visitors")
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(asJsonString(newVisitor)))
+            .andExpect(status().isBadRequest());
+
+        List<Visitor> allVisitors = repository.findAll();
+        assertThat(allVisitors).hasSize(sizeBeforeUpdate);
+    }
+
 //
 //    @Test
 //    public void deleteVisitor() {
