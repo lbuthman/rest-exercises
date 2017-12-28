@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -128,10 +129,26 @@ public class VisitorControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    //
-//    @Test
-//    public void updateVisitor() {
-//    }
+
+    @Test
+    public void updateVisitor() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(visitor);
+
+        int sizeBeforeUpdate = repository.findAll().size();
+
+        Visitor updatedVisitor = repository.findOne(visitor.getId());
+        updatedVisitor.setName(UPDATED_NAME);
+
+        mockMvc.perform(put("/api/v1/visitors/{id}", updatedVisitor.getId())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(updatedVisitor)))
+                .andExpect(status().isOk());
+
+        List<Visitor> allVisitors = repository.findAll();
+        assertThat(allVisitors).hasSize(sizeBeforeUpdate);
+        assertThat(allVisitors.contains(UPDATED_NAME));
+    }
 //
 //    @Test
 //    public void deleteVisitor() {
