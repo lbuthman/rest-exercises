@@ -77,6 +77,10 @@ public class VisitorController {
     @ResponseStatus(HttpStatus.OK)
     public Visitor updateVisitor(@RequestBody Visitor visitor) {
         log.debug("REST request to update Visitor : {}", visitor);
+        if (visitor.getId() == null) {
+            throw new BadRequestException("A visitor must have an ID to be updated",
+                    ENTITY_NAME);
+        }
         return  service.updateVisitor(visitor);
     }
 
