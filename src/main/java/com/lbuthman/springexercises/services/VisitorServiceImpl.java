@@ -32,7 +32,6 @@ public class VisitorServiceImpl implements VisitorService {
 
     @Override
     public Visitor updateVisitor(Long id, Visitor visitor) {
-        visitor.setId(id);
         return repository.save(visitor);
     }
 
