@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -82,5 +83,21 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.[*].description").value(hasItems(product.getDescription())))
                 .andExpect(jsonPath("$.[*].price").value(hasItems(product.getPrice())))
                 .andExpect(jsonPath("$.[*].stock").value(hasItems(product.getStock())));
+    }
+
+    @Test
+    public void getOneProduct() throws Exception {
+        //initizlie repository
+        repository.saveAndFlush(product);
+
+        when(service.getProduct(product.getId())).thenReturn(repository.findOne(product.getId()));
+
+        mockMvc.perform(get("/api/v1/products/{id}", product.getId()))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.id").value(hasItem(product.getId())))
+                .andExpect(jsonPath("$.description").value(hasItem(product.getDescription())))
+                .andExpect(jsonPath("$.price").value(hasItem(product.getPrice())))
+                .andExpect(jsonPath("$.stock").value(hasItem(product.getStock())));
     }
 }
