@@ -99,4 +99,13 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .andExpect(jsonPath("$.price").value(product.getPrice()))
                 .andExpect(jsonPath("$.stock").value(product.getStock()));
     }
+
+    @Test
+    public void getNonExistentProduct() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(product);
+
+        mockMvc.perform(get("/api/v1/products/{id}", 33L))
+                .andExpect(status().isNotFound());
+    }
 }
