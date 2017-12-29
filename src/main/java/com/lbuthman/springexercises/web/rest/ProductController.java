@@ -51,4 +51,10 @@ public class ProductController {
 
         return service.createProduct(product);
     }
+
+    @PutMapping
+    @ResponseStatus(HttpStatus.OK)
+    public Product updateProduct(@RequestBody Product product) {
+        return service.updateProduct(product);
+    }
 }
