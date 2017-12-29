@@ -192,4 +192,17 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
         assertThat(repoSizeBefore == repository.findAll().size());
     }
+
+    @Test
+    public void deleteProduct() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(product);
+
+        int repoSizeBefore = repository.findAll().size();
+
+        mockMvc.perform(delete("/api/v1/products/{id}", product.getId()))
+                .andExpect(status().isOk());
+
+        assertThat(repoSizeBefore > repository.findAll().size());
+    }
 }
