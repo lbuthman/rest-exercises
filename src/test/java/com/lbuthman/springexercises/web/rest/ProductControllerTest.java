@@ -34,6 +34,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     private final static double UPDATED_PRICE = 4.99;
     private final static int DEFAULT_STOCK = 5;
     private final static int UPDATED_STOCK = 10;
+    private final static Long BAD_ID = 42L;
 
     @MockBean
     private ProductService service;
@@ -108,7 +109,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
         //initialize repository
         repository.saveAndFlush(product);
 
-        mockMvc.perform(get("/api/v1/products/{id}", 33L))
+        mockMvc.perform(get("/api/v1/products/{id}", BAD_ID))
                 .andExpect(status().isNotFound());
     }
 
@@ -204,5 +205,10 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .andExpect(status().isOk());
 
         assertThat(repoSizeBefore > repository.findAll().size());
+    }
+
+    @Test
+    public void deleteNonExistentProduct() throws Exception {
+
     }
 }
