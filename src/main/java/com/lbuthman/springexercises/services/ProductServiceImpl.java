@@ -11,9 +11,13 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductRepository repository;
 
+    public ProductServiceImpl(ProductRepository repository) {
+        this.repository = repository;
+    }
+
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return repository.findAll();
     }
 
     @Override
