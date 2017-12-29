@@ -95,7 +95,7 @@ public class ProductControllerTest extends AbstractRestControllerTest {
         mockMvc.perform(get("/api/v1/products/{id}", product.getId()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.id").value(hasItem(product.getId())))
+                .andExpect(jsonPath("$.id").value(hasItem(product.getId().intValue())))
                 .andExpect(jsonPath("$.description").value(hasItem(product.getDescription())))
                 .andExpect(jsonPath("$.price").value(hasItem(product.getPrice())))
                 .andExpect(jsonPath("$.stock").value(hasItem(product.getStock())));
