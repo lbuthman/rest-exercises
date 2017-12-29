@@ -26,26 +26,6 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getInStockProducts() {
-        return null;
-    }
-
-    @Override
-    public List<Product> getOutOfStockProducts() {
-        return null;
-    }
-
-    @Override
-    public List<Product> getSortedHighPriceProducts() {
-        return null;
-    }
-
-    @Override
-    public List<Product> getSortedLowPriceProducts() {
-        return null;
-    }
-
-    @Override
     public Product createProduct(Product product) {
         return null;
     }

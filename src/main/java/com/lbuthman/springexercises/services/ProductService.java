@@ -11,14 +11,6 @@ public interface ProductService {
 
     Product getProduct(Long id);
 
-    List<Product> getInStockProducts();
-
-    List<Product> getOutOfStockProducts();
-
-    List<Product> getSortedHighPriceProducts();
-
-    List<Product> getSortedLowPriceProducts();
-
     Product createProduct(Product product);
 
     Product updateProduct(Product product);
