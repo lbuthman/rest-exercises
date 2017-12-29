@@ -60,4 +60,10 @@ public class ProductController {
         }
         return service.updateProduct(product);
     }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteProduct(@PathVariable Long id) {
+        service.deleteProduct(id);
+    }
 }
