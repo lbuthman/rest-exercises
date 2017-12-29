@@ -209,6 +209,14 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
     @Test
     public void deleteNonExistentProduct() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(product);
 
+        int repoSizeBefore = repository.findAll().size();
+
+        mockMvc.perform(delete("/api/v1/products/{id}", BAD_ID))
+                .andExpect(status().isBadRequest());
+
+        assertThat(repoSizeBefore == repository.findAll().size());
     }
 }
