@@ -123,4 +123,18 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
         assertThat(repoSizeBefore == repository.findAll().size() + 1);
     }
+
+    @Test
+    public void checkDescriptionRequired() throws Exception {
+
+        int repoSizeBefore = repository.findAll().size();
+        product.setDescription(null);
+
+        mockMvc.perform(post("/api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(product)))
+                .andExpect(status().isBadRequest());
+
+        assertThat(repoSizeBefore == repository.findAll().size());
+    }
 }
