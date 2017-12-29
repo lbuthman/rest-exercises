@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -121,6 +121,6 @@ public class ProductControllerTest extends AbstractRestControllerTest {
                 .content(asJsonString(product)))
                 .andExpect(status().isCreated());
 
-        assertTrue(repoSizeBefore < repository.findAll().size());
+        assertThat(repoSizeBefore == repository.findAll().size() + 1);
     }
 }
