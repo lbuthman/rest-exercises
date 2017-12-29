@@ -45,6 +45,10 @@ public class ProductController {
             throw new BadRequestException("Product missing description.", ENTITY_NAME);
         }
 
+        if (product.getId() != null) {
+            throw new BadRequestException("Product with id " + product.getId() + " already exists", ENTITY_NAME);
+        }
+
         return service.createProduct(product);
     }
 }
