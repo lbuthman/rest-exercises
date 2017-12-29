@@ -179,4 +179,17 @@ public class ProductControllerTest extends AbstractRestControllerTest {
         assertThat(updatedProduct.getPrice() == UPDATED_PRICE);
         assertThat(updatedProduct.getStock() == UPDATED_STOCK);
     }
+
+    @Test
+    public void updateNonExistentProduct() throws Exception {
+
+        int repoSizeBefore = repository.findAll().size();
+
+        mockMvc.perform(put("/api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(product)))
+                .andExpect(status().isBadRequest());
+
+        assertThat(repoSizeBefore == repository.findAll().size());
+    }
 }
