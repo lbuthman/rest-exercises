@@ -2,6 +2,7 @@ package com.lbuthman.springexercises.web.rest;
 
 import com.lbuthman.springexercises.domain.Product;
 import com.lbuthman.springexercises.services.ProductService;
+import com.lbuthman.springexercises.web.rest.errors.BadRequestException;
 import com.lbuthman.springexercises.web.rest.errors.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,10 @@ public class ProductController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Product createNewProduct(@RequestBody Product product) {
+        if (product.getDescription() == null) {
+            throw new BadRequestException("Product missing description.", ENTITY_NAME);
+        }
+
         return service.createProduct(product);
     }
 }
