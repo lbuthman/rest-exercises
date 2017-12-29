@@ -55,6 +55,9 @@ public class ProductController {
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Product updateProduct(@RequestBody Product product) {
+        if (product.getId() == null) {
+            throw new BadRequestException("Product must exist to be updated.", ENTITY_NAME);
+        }
         return service.updateProduct(product);
     }
 }
