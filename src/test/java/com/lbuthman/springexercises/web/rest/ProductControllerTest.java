@@ -17,8 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static org.hamcrest.Matchers.hasItems;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -107,5 +109,18 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
         mockMvc.perform(get("/api/v1/products/{id}", 33L))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void addProduct() throws Exception {
+
+        int repoSizeBefore = repository.findAll().size();
+
+        mockMvc.perform(post("/api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(product)))
+                .andExpect(status().isCreated());
+
+        assertTrue(repoSizeBefore < repository.findAll().size());
     }
 }
