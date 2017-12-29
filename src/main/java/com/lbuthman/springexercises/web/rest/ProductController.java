@@ -64,6 +64,10 @@ public class ProductController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteProduct(@PathVariable Long id) {
+        Product productToDelte = service.getProduct(id);
+        if (productToDelte == null) {
+            throw new BadRequestException("Product not found ID: " + id, ENTITY_NAME);
+        }
         service.deleteProduct(id);
     }
 }
