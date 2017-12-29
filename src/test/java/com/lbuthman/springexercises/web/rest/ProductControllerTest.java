@@ -16,11 +16,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
@@ -156,4 +157,26 @@ public class ProductControllerTest extends AbstractRestControllerTest {
         assertThat(repoSizeBefore == repository.findAll().size());
     }
 
+    @Test
+    public void updateProduct() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(product);
+
+        int repoSizeBefore = repository.findAll().size();
+        product.setDescription(UPDATED_DESCRIPTION);
+        product.setPrice(UPDATED_PRICE);
+        product.setStock(UPDATED_STOCK);
+
+        mockMvc.perform(put("/api/v1/products")
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(asJsonString(product)))
+                .andExpect(status().isOk());
+
+        List<Product> products = repository.findAll();
+        assertThat(repoSizeBefore == products.size());
+        Product updatedProduct = products.get(products.size() - 1);
+        assertThat(updatedProduct.getDescription().equals(UPDATED_DESCRIPTION));
+        assertThat(updatedProduct.getPrice() == UPDATED_PRICE);
+        assertThat(updatedProduct.getStock() == UPDATED_STOCK);
+    }
 }
