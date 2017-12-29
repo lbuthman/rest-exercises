@@ -20,7 +20,7 @@ public class Product {
     private String description;
 
     @NotNull
-    private Float price;
+    private double price;
 
-    private Integer stock;
+    private int stock;
 }
