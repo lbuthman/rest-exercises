@@ -1,12 +1,15 @@
 package com.lbuthman.springexercises.services;
 
 import com.lbuthman.springexercises.domain.Product;
+import com.lbuthman.springexercises.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
+
+    private ProductRepository repository;
 
     @Override
     public List<Product> getAllProducts() {
