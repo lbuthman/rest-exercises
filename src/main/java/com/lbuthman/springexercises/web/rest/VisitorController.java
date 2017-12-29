@@ -26,7 +26,7 @@ public class VisitorController {
     }
 
     /**
-     * GET / : get all the visitors
+     * GET /visitors : get all the visitors
      *
      * @return a status of 200 (OK) and a List of visitors
      */
@@ -37,7 +37,7 @@ public class VisitorController {
     }
 
     /**
-     * GET /:name : get the visitor by name
+     * GET /visitors/:name : get the visitor by name
      *
      * @param name the name of the visitor to retrieve
      * @return a status of 200 (OK) and the found visitor
@@ -56,7 +56,7 @@ public class VisitorController {
     }
 
     /**
-     * POST / : post a new visitor entity
+     * POST /visitors : post a new visitor entity
      *
      * @param visitor the visitor entity to create
      * @return a status of 201 (CREATED) and new visitor
@@ -73,6 +73,13 @@ public class VisitorController {
         return service.createVisitor(visitor);
     }
 
+    /**
+     * PUT /visitors :
+     *
+     * @param visitor the visitor entity to update
+     * @return a status of 200 (OK) and updated visitor
+     * or a status of 400 (BAD REQUEST) if visitor doesn't exist
+     */
     @PutMapping
     @ResponseStatus(HttpStatus.OK)
     public Visitor updateVisitor(@RequestBody Visitor visitor) {
@@ -84,6 +91,11 @@ public class VisitorController {
         return  service.updateVisitor(visitor);
     }
 
+    /**
+     * DELETE /visitors/:id : delete the visitor with id
+     *
+     * @param id the id of the visitor to delete
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteVisitor(@PathVariable Long id) {
