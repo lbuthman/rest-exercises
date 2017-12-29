@@ -11,9 +11,15 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.hamcrest.Matchers.hasItems;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = SpringExercisesApplication.class)
@@ -63,6 +69,18 @@ public class ProductControllerTest extends AbstractRestControllerTest {
     }
 
     @Test
-    public void getAllProducts() {
+    public void getAllProducts() throws Exception {
+        //initialize repository
+        repository.saveAndFlush(product);
+
+        when(service.getAllProducts()).thenReturn(repository.findAll());
+
+        mockMvc.perform(get("/products"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.[*].id").value(hasItems(product.getId())))
+                .andExpect(jsonPath("$.[*].description").value(hasItems(product.getDescription())))
+                .andExpect(jsonPath("$.[*].price").value(hasItems(product.getPrice())))
+                .andExpect(jsonPath("$.[*].stock").value(hasItems(product.getStock())));
     }
 }
