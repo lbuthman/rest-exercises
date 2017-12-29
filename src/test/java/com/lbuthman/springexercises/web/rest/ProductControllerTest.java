@@ -75,10 +75,10 @@ public class ProductControllerTest extends AbstractRestControllerTest {
 
         when(service.getAllProducts()).thenReturn(repository.findAll());
 
-        mockMvc.perform(get("/products"))
+        mockMvc.perform(get("/api/v1/products"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
-                .andExpect(jsonPath("$.[*].id").value(hasItems(product.getId())))
+                .andExpect(jsonPath("$.[*].id").value(hasItems(product.getId().intValue())))
                 .andExpect(jsonPath("$.[*].description").value(hasItems(product.getDescription())))
                 .andExpect(jsonPath("$.[*].price").value(hasItems(product.getPrice())))
                 .andExpect(jsonPath("$.[*].stock").value(hasItems(product.getStock())));
