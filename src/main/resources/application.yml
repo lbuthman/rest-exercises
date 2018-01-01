@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/sbfs_exercise
+    username: lbuthman
+    password: secret
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database: mysql
+    show-sql: true
+
+## Auto-Generate MySQL Schema file
+#
+#javax:
+#  persistence:
+#    schema-generation:
+#      scripts:
+#        action: create
+#        create-target: spring_exercises_create.sql
+#      create-source: metadata
+
