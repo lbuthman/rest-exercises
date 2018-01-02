@@ -28,7 +28,7 @@ export class VisitorsListComponent implements OnInit {
   }
 
   onVisitorChange($event, visitor) {
-    console.log("checkbox checked")
+    visitor.greeted = visitor.greeted != true;
   }
 
 }
