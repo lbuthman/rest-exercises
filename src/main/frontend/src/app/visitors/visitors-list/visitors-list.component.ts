@@ -14,13 +14,17 @@ export class VisitorsListComponent implements OnInit {
   constructor(private visitorService: VisitorService) { }
 
   ngOnInit() {
-    return this.visitorService.getVisitors()
+    this.visitorService.getVisitors()
       .subscribe(
         (visitors: any[]) => {
           this.visitors = visitors;
         },
         (error) => console.log(error)
       );
+
+    this.visitorService.onVisitorAdded.subscribe(
+      (visitor: Visitor) => this.visitors.push(visitor)
+    );
   }
 
   onVisitorChange($event, visitor) {

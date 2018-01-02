@@ -1,11 +1,13 @@
 
-import {Injectable} from "@angular/core";
+import {EventEmitter, Injectable} from "@angular/core";
 import "rxjs/add/operator/map"
 import {Http} from "@angular/http";
 import {Visitor} from "./visitor.model";
 
 @Injectable()
 export class VisitorService {
+
+  onVisitorAdded = new EventEmitter<Visitor>();
 
   constructor(private http: Http) {
   }

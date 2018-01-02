@@ -18,13 +18,13 @@ export class VisitorsAddComponent implements OnInit {
 
   onVisitorAdd(event) {
     let visitor: Visitor = new Visitor(event.target.value, false);
-    console.log(visitor);
+
     this.visitorService.addVisitor(visitor)
       .subscribe(
         (newVisitor: Visitor) => {
           // clear the input
           this.addVisitorValue = " ";
-          console.log("enter pressed");
+          this.visitorService.onVisitorAdded.emit(newVisitor);
         }
       )
   }
