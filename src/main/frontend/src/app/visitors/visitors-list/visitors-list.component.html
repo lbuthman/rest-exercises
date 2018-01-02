@@ -1,5 +1,14 @@
 <ul class="list-group">
-  <li class="list-group-item">Visitor name 1</li>
-  <li class="list-group-item">Visitor name 2</li>
-  <li class="list-group-item">Visitor name 3</li>
+  <li *ngFor="let visitor of visitors" class="list-group-item">
+    <div class="visitor-checkbox">
+      <input type="checkbox"
+             class="list-child"
+             (change)="onVisitorChange($event, visitor)"
+             [checked]="visitor.greeted">
+      <span>Hello {{visitor.name}}</span>
+      <div ngClass="{{visitor.greeted ? 'alert alert-success' : 'alert alert-danger'}}"
+            class="alert">What happens?
+      </div>
+    </div>
+  </li>
 </ul>
