@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {VisitorService} from "../visitor.service";
+import {Visitor} from "../visitor.model";
 
 @Component({
   selector: 'visitors-add',
@@ -7,9 +9,24 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VisitorsAddComponent implements OnInit {
 
-  constructor() { }
+  addVisitorValue: string = null;
+
+  constructor(private visitorService: VisitorService) { }
 
   ngOnInit() {
+  }
+
+  onVisitorAdd(event) {
+    let visitor: Visitor = new Visitor(event.target.value, false);
+    console.log(visitor);
+    this.visitorService.addVisitor(visitor)
+      .subscribe(
+        (newVisitor: Visitor) => {
+          // clear the input
+          this.addVisitorValue = " ";
+          console.log("enter pressed");
+        }
+      )
   }
 
 }

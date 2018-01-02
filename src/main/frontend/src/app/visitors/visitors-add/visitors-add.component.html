@@ -1,3 +1,7 @@
 <div class="form-group">
-  <input type="text" class="form-control" placeholder="Enter your name here...">
+  <input type="text"
+         class="form-control"
+         placeholder="Enter your name here..."
+         (keyup.enter)="onVisitorAdd($event)"
+         [(ngModel)]="addVisitorValue">
 </div>
