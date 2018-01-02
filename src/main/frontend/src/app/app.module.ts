@@ -7,6 +7,7 @@ import { VisitorsComponent } from './visitors/visitors.component';
 import { VisitorsAddComponent } from './visitors/visitors-add/visitors-add.component';
 import { VisitorsListComponent } from './visitors/visitors-list/visitors-list.component';
 import {VisitorService} from "./visitors/visitor.service";
+import {FormsModule} from "@angular/forms";
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import {VisitorService} from "./visitors/visitor.service";
   ],
   imports: [
     BrowserModule,
-    HttpModule
+    HttpModule,
+    FormsModule
   ],
   providers: [VisitorService],
   bootstrap: [AppComponent]
