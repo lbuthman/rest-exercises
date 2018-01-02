@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Visitor} from "../visitor.model";
+import {VisitorService} from "../visitor.service";
 
 @Component({
   selector: 'visitors-list',
@@ -10,12 +11,16 @@ export class VisitorsListComponent implements OnInit {
 
   visitors: Visitor[] = [];
 
-  constructor() { }
+  constructor(private visitorService: VisitorService) { }
 
   ngOnInit() {
-    this.visitors.push(new Visitor("Luke", true));
-    this.visitors.push(new Visitor("Albie", false));
-    this.visitors.push(new Visitor("Julie", false));
+    return this.visitorService.getVisitors()
+      .subscribe(
+        (visitors: any[]) => {
+          this.visitors = visitors;
+        },
+        (error) => console.log(error)
+      );
   }
 
   onVisitorChange($event, visitor) {

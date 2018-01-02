@@ -1,13 +1,15 @@
-import {HttpClient} from "@angular/common/http";
+
 import {Injectable} from "@angular/core";
+import "rxjs/add/operator/map"
+import {Http} from "@angular/http";
 
 @Injectable()
 export class VisitorService {
 
-  constructor(private http: HttpClient) {
+  constructor(private http: Http) {
   }
 
   getVisitors() {
-    return this.http.get('/api/v1/visitors').forEach(response => response);
+    return this.http.get('/api/v1/visitors').map(response => response.json());
   }
 }
