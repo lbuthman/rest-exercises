@@ -31,4 +31,17 @@ export class VisitorsListComponent implements OnInit {
     visitor.greeted = visitor.greeted != true;
   }
 
+  onDeleteClick(visitor) {
+    this.visitorService.deleteVisitor(visitor)
+      .subscribe(() => {
+          let index = this.visitors.indexOf(visitor);
+          this.visitors.splice(index, 1);
+        }
+      );
+  }
+
+  onEditClick() {
+    console.log("edit clicked");
+  }
+
 }

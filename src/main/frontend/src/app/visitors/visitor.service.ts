@@ -19,4 +19,13 @@ export class VisitorService {
   addVisitor(visitor: Visitor) {
     return this.http.post("/api/v1/visitors", visitor).map(response => response.json());
   }
+
+  editVisitor(visitor: Visitor) {
+
+  }
+
+  deleteVisitor(visitor: Visitor) {
+    let path = "/api/v1/visitors/" + visitor.id;
+    return this.http.delete(path);
+  }
 }
