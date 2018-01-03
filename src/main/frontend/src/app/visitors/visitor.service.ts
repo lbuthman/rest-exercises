@@ -21,11 +21,10 @@ export class VisitorService {
   }
 
   editVisitor(visitor: Visitor) {
-
+    return this.http.put("/api/v1/visitors", visitor).map(response => response.json());
   }
 
   deleteVisitor(visitor: Visitor) {
-    let path = "/api/v1/visitors/" + visitor.id;
-    return this.http.delete(path);
+    return this.http.delete("/api/v1/visitors/" + visitor.id);
   }
 }

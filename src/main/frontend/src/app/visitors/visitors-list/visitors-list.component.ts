@@ -40,8 +40,15 @@ export class VisitorsListComponent implements OnInit {
       );
   }
 
-  onEditClick() {
-    console.log("edit clicked");
+  onEditClick(visitor) {
+    this.visitorService.editVisitor(visitor)
+      .subscribe(
+        (visitor: Visitor) => {
+          // let index = this.visitors.indexOf(visitor);
+          // this.visitors[index] = new Visitor("Hello!", true);
+          // this.visitorService.onVisitorAdded.emit(this.visitors[index]);
+        }
+      )
   }
 
 }
