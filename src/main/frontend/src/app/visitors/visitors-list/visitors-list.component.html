@@ -1,14 +1,16 @@
 <ul class="list-group">
-  <li *ngFor="let visitor of visitors" class="list-group-item">
-    <div class="visitor-checkbox">
+  <li *ngFor="let visitor of visitors" class="list-group-item row">
+    <div class="visitor-checkbox text-center">
       <input type="checkbox"
              class="list-child"
              (change)="onVisitorChange($event, visitor)"
              [checked]="visitor.greeted">
       <span>Hello {{visitor.name}}</span>
       <div ngClass="{{visitor.greeted ? 'alert alert-success' : 'alert alert-danger'}}"
-            class="alert">What happens?
+            class="alert text-center col-xs-3">What happens?
       </div>
+      <button class="btn btn-danger pull-right">Delete</button>
+      <button class="btn btn-default pull-right">Edit</button>
     </div>
   </li>
 </ul>
