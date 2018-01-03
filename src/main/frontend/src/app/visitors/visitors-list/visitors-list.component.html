@@ -7,7 +7,7 @@
              [checked]="visitor.greeted">
       <span>Hello {{visitor.name}}</span>
       <div ngClass="{{visitor.greeted ? 'alert alert-success' : 'alert alert-danger'}}"
-            class="alert text-center col-xs-3">What happens?
+            class="alert text-center col-xs-3">{{visitor.greeted ? "That happens!" : "What happens?"}}
       </div>
       <button class="btn btn-danger pull-right">Delete</button>
       <button class="btn btn-default pull-right">Edit</button>
